@@ -8,9 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.heroku.sdk.jdbc.DatabaseUrl;
+
 public class DatabaseTest {
 
-	  private static Connection getConnection() throws URISyntaxException, SQLException {
+	/*  private static Connection getConnection() throws URISyntaxException, SQLException {
 	        URI dbUri = new URI(System.getenv("DATABASE_URL"));
 
 	        String username = dbUri.getUserInfo().split(":")[0];
@@ -18,11 +20,11 @@ public class DatabaseTest {
 	        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 
 	        return DriverManager.getConnection(dbUrl, username, password);
-	    }
+	    }*/
 	
 	  public static void dbTaste() throws Exception {
 	        
-	        Connection connection = getConnection();
+	        Connection  connection = DatabaseUrl.extract().getConnection();
 	        
 	        Statement stmt = connection.createStatement();
 	        stmt.executeUpdate("DROP TABLE IF EXISTS ticks");
