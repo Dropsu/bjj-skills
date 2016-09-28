@@ -19,7 +19,7 @@ public class HelloController {
 	@RequestMapping(value = "/db", method = RequestMethod.GET)
 	@ResponseBody
 	public String test() throws Exception {
-		return DatabaseTest.testDb();
+		return DatabaseTest.sayHolloFromDb();
 	}
 	
 
