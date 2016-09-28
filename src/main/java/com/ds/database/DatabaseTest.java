@@ -22,6 +22,8 @@ public class DatabaseTest {
 	        while (rs.next()) {
 	        	result+=("Read from DB: " + rs.getTimestamp("tick"));
 	        }
+	        if(connection != null)
+	        	connection.close();
 			return result;
 	    }
 
