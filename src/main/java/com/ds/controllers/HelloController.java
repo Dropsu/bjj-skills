@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ds.database.DatabaseTest;
+import com.ds.database.ManageEmployee;
 
 @Controller
 public class HelloController {
@@ -18,9 +19,14 @@ public class HelloController {
 	
 	@RequestMapping(value = "/db", method = RequestMethod.GET)
 	@ResponseBody
-	public String test() throws Exception {
+	public String dbTest() throws Exception {
 		return DatabaseTest.dbTaste();
 	}
 	
+	@RequestMapping(value = "/hibernate", method = RequestMethod.GET)
+	@ResponseBody
+	public void hibernateTest() throws Exception {
+		ManageEmployee.testHibernate();
+	}
 
 }
