@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import com.heroku.sdk.jdbc.DatabaseUrl;
 
 public class DatabaseTest {
 
@@ -13,11 +12,7 @@ public class DatabaseTest {
 	  public static String dbTaste() throws Exception {
 	      
 		  	String result = "";
-		  
-//	        Connection  connection = DatabaseUrl.extract().getConnection();
-	        
-		  	
-		  	
+		  		  	
 		  	URI dbUri = new URI(System.getenv("DATABASE_URL"));
 
 		    String username = dbUri.getUserInfo().split(":")[0];
