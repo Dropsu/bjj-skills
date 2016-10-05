@@ -39,14 +39,15 @@
 		<dependency>
 	      <groupId>org.postgresql</groupId>
 	      <artifactId>postgresql</artifactId>
-	      <version>9.4-1201-jdbc4</version>
-	    </dependency>
+	      </dependency>
 	    
-	    <dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-core</artifactId>
-		    <version>5.1.0.Final</version>
-		</dependency>
+		 <dependency>
+	  		<groupId>org.hibernate</groupId>
+	  		<artifactId>hibernate-core</artifactId>
+	  		<version>4.3.5.Final</version>
+	  	</dependency>
+
+	
 	    
 			
 	</dependencies>

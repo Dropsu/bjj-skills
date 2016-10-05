@@ -12,25 +12,26 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import com.ds.domain.Employee;
+import com.ds.domain.EmployeeXML;
 
-public class ManageEmployee {
-   private static SessionFactory factory; 
+public class ManageEmployeeXML {
+	
+   private static SessionFactory factory;
    private static ServiceRegistry serviceRegistry;
-public static void testAnnotations() {
+   
+   public static void testHibernate() {
       try{
-	  		   Configuration configuration = new Configuration().
-    		   addPackage("com.ds.domain").
-               addAnnotatedClass(Employee.class).
-               configure().
-               setProperty("hibernate.connection.url", System.getenv("JDBC_DATABASE_URL"));
-               serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
-                       configuration.getProperties()).build();
-               factory = configuration.buildSessionFactory(serviceRegistry);        
+    	  Configuration configuration = new Configuration().
+                  configure().
+                  setProperty("hibernate.connection.url", System.getenv("JDBC_DATABASE_URL"));
+                  serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
+                          configuration.getProperties()).build();
+                  factory = configuration.buildSessionFactory(serviceRegistry); 
       }catch (Throwable ex) { 
          System.err.println("Failed to create sessionFactory object." + ex);
          throw new ExceptionInInitializerError(ex); 
       }
-      ManageEmployee ME = new ManageEmployee();
+      ManageEmployeeXML ME = new ManageEmployeeXML();
 
       /* Add few employee records in database */
       Integer empID1 = ME.addEmployee("Zara", "Ali", 1000);
@@ -56,10 +57,7 @@ public static void testAnnotations() {
       Integer employeeID = null;
       try{
          tx = session.beginTransaction();
-         Employee employee = new Employee();
-         employee.setFirstName(fname);
-         employee.setLastName(lname);
-         employee.setSalary(salary);
+         EmployeeXML employee = new EmployeeXML(fname, lname, salary);
          employeeID = (Integer) session.save(employee); 
          tx.commit();
       }catch (HibernateException e) {
@@ -76,10 +74,10 @@ public static void testAnnotations() {
       Transaction tx = null;
       try{
          tx = session.beginTransaction();
-         List employees = session.createQuery("FROM Employee").list(); 
+         List employees = session.createQuery("FROM EmployeeXML").list(); 
          for (Iterator iterator = 
                            employees.iterator(); iterator.hasNext();){
-            Employee employee = (Employee) iterator.next(); 
+            EmployeeXML employee = (EmployeeXML) iterator.next(); 
             System.out.print("First Name: " + employee.getFirstName()); 
             System.out.print("  Last Name: " + employee.getLastName()); 
             System.out.println("  Salary: " + employee.getSalary()); 
@@ -98,8 +96,8 @@ public static void testAnnotations() {
       Transaction tx = null;
       try{
          tx = session.beginTransaction();
-         Employee employee = 
-                    (Employee)session.get(Employee.class, EmployeeID); 
+         EmployeeXML employee = 
+                    (EmployeeXML)session.get(EmployeeXML.class, EmployeeID); 
          employee.setSalary( salary );
 		 session.update(employee); 
          tx.commit();
@@ -116,8 +114,8 @@ public static void testAnnotations() {
       Transaction tx = null;
       try{
          tx = session.beginTransaction();
-         Employee employee = 
-                   (Employee)session.get(Employee.class, EmployeeID); 
+         EmployeeXML employee = 
+                   (EmployeeXML)session.get(EmployeeXML.class, EmployeeID); 
          session.delete(employee); 
          tx.commit();
       }catch (HibernateException e) {

@@ -8,19 +8,20 @@
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">damiuq55</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:0000/TO-BE-REPLACED</property>
-		<!-- WARNING FOR NOW CONNECTION.URL ONLY WORKS FOR LOCAL -->
-		<!-- jdbc:postgresql://localhost:5432/postgres -->
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:0/TO_BE_REPLACED_BY_SYSTEM_ENV</property>
+        
+        <!-- LOCAL: jdbc:postgresql://localhost:5432/postgres -->
+	
 
         <property name="connection_pool_size">1</property>
 
         <property name="hbm2ddl.auto">create</property>
 
         <property name="show_sql">true</property>
-
-
-
-       <mapping resource="Employee.hbm.xml"/>
+        
+	    <mapping resource="Hibernate/EmployeeXML.hbm.xml"/>
+	    <mapping resource="Hibernate/Technique.hbm.xml"/> 
+        
 
     </session-factory>
 </hibernate-configuration>

@@ -1,23 +1,16 @@
 package com.ds.domain;
-import javax.persistence.*;
-
-@Entity
-@Table(name = "EMPLOYEE")
-public class Employee {
-   @Id @GeneratedValue
-   @Column(name = "id")
+public class EmployeeXML {
    private int id;
-
-   @Column(name = "first_name")
-   private String firstName;
-
-   @Column(name = "last_name")
-   private String lastName;
-
-   @Column(name = "salary")
+   private String firstName; 
+   private String lastName;   
    private int salary;  
 
-   public Employee() {}
+   public EmployeeXML() {}
+   public EmployeeXML(String fname, String lname, int salary) {
+      this.firstName = fname;
+      this.lastName = lname;
+      this.salary = salary;
+   }
    public int getId() {
       return id;
    }

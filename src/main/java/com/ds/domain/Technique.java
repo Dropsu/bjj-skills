@@ -2,19 +2,37 @@ package com.ds.domain;
 
 import java.util.ArrayList;
 
+import javax.persistence.*;
+
+
+
+
+
+@Entity
+@Table(name="Technique")
 public class Technique {
 
+	@Id @GeneratedValue
+	@Column(name= "id")
 	private int id;
 	private String name;
 	private String desc;
-	private ArrayList <String> links;
+	private String links; // TODO: CHANGE TO LIST OF LINKS
 	private String imgLink;
 	private String startingPos;
 	private String finalPos;
-	private byte lvlOfCompetence;
+	private Boolean submitting;
+	private int lvlOfCompetence;
 	
 	public Technique() {}
 	
+	// TODO: use builder pattern to create this with varying number of arguments
+	
+	public Technique(String name) { 
+		super();
+		this.name = name;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -39,11 +57,11 @@ public class Technique {
 		this.desc = desc;
 	}
 
-	public ArrayList<String> getLinks() {
+	public String getLinks() {
 		return links;
 	}
 
-	public void setLinks(ArrayList<String> links) {
+	public void setLinks(String links) {
 		this.links = links;
 	}
 
@@ -71,12 +89,24 @@ public class Technique {
 		this.finalPos = finalPos;
 	}
 
-	public byte getLvlOfCompetence() {
+	public int getLvlOfCompetence() {
 		return lvlOfCompetence;
 	}
 
-	public void setLvlOfCompetence(byte lvlOfCompetence) {
-		this.lvlOfCompetence = lvlOfCompetence;
+	public void setLvlOfCompetence(int lvlOfCompetence2) {
+		this.lvlOfCompetence = lvlOfCompetence2;
+	}
+
+
+
+	public Boolean getSubmitting() {
+		return submitting;
+	}
+
+
+
+	public void setSubmitting(Boolean submitting) {
+		this.submitting = submitting;
 	}
 	
 }

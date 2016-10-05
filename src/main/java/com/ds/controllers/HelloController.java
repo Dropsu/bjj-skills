@@ -5,8 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import com.ds.database.DatabaseTest;
 import com.ds.database.ManageEmployee;
+import com.ds.database.ManageEmployeeXML;
+import com.ds.database.ManageEmployeeXML;
+import com.ds.database.TechniqueDAO;
 
 @Controller
 public class HelloController {
@@ -26,7 +30,8 @@ public class HelloController {
 	@RequestMapping(value = "/hibernate", method = RequestMethod.GET)
 	@ResponseBody
 	public void hibernateTest() throws Exception {
-		ManageEmployee.testHibernate();
+
+		ManageEmployee.testAnnotations();
 	}
 
 }
