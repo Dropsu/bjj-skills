@@ -31,7 +31,7 @@ public class HelloController {
 	@ResponseBody
 	public void hibernateTest() throws Exception {
 
-		ManageEmployee.testAnnotations();
+		TechniqueDAO.testHibernate();
 	}
 
 }

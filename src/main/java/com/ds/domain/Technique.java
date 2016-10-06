@@ -1,11 +1,9 @@
 package com.ds.domain;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import javax.persistence.*;
-
-
-
 
 
 @Entity
@@ -13,15 +11,32 @@ import javax.persistence.*;
 public class Technique {
 
 	@Id @GeneratedValue
-	@Column(name= "id")
+	@Column(name= "technique_id")
 	private int id;
+	
+	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "description")
 	private String desc;
-	private String links; // TODO: CHANGE TO LIST OF LINKS
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name="TECHNIQUE_LINK", joinColumns = {@JoinColumn(name = "technique_id")}, inverseJoinColumns= {@JoinColumn(name="link_id")})
+	private Set <Link> links; 
+	
+	@Column(name = "img_link")
 	private String imgLink;
+	
+	@Column(name = "starting_pos")
 	private String startingPos;
+	
+	@Column(name = "final_pos")
 	private String finalPos;
+	
+	@Column(name = "submitting")
 	private Boolean submitting;
+	
+	@Column(name = "lvl_of_competence")
 	private int lvlOfCompetence;
 	
 	public Technique() {}
@@ -57,11 +72,11 @@ public class Technique {
 		this.desc = desc;
 	}
 
-	public String getLinks() {
+	public Set<Link> getLinks() {
 		return links;
 	}
 
-	public void setLinks(String links) {
+	public void setLinks(Set<Link> links) {
 		this.links = links;
 	}
 

@@ -6,22 +6,32 @@ import java.util.Iterator;
 import org.hibernate.HibernateException; 
 import org.hibernate.Session; 
 import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
+import com.ds.domain.Employee;
 import com.ds.domain.EmployeeXML;
+import com.ds.domain.Link;
 import com.ds.domain.Technique;
 
 public class TechniqueDAO {
 	
    private static SessionFactory factory; 
+   private static ServiceRegistry serviceRegistry;
    
    public static void testHibernate() {
       try{
-    	 Configuration cfg = new Configuration();
-    	 cfg.configure();
-    	 cfg.setProperty("hibernate.connection.url", System.getenv("JDBC_DATABASE_URL"));
-         factory = cfg.buildSessionFactory();
+    	  Configuration configuration = new Configuration().
+       		   addPackage("com.ds.domain").
+                  addAnnotatedClass(Technique.class).
+                  addAnnotatedClass(Link.class).
+                  configure().
+                  setProperty("hibernate.connection.url", System.getenv("JDBC_DATABASE_URL"));
+                  serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
+                          configuration.getProperties()).build();
+                  factory = configuration.buildSessionFactory(serviceRegistry);  
       }catch (Throwable ex) { 
          System.err.println("Failed to create sessionFactory object." + ex);
          throw new ExceptionInInitializerError(ex); 
