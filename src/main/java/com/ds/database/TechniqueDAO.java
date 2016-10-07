@@ -62,7 +62,7 @@ public class TechniqueDAO {
       Integer techniqueID = null;
       try{
          tx = session.beginTransaction();
-         Technique technique = new Technique(name);
+         Technique technique = new Technique.TechniqueBuilder(name).build();
          techniqueID = (Integer) session.save(technique); 
          tx.commit();
       }catch (HibernateException e) {

@@ -43,9 +43,17 @@ public class Technique {
 	
 	// TODO: use builder pattern to create this with varying number of arguments
 	
-	public Technique(String name) { 
+
+	private Technique(TechniqueBuilder builder) {
 		super();
-		this.name = name;
+		this.name = builder.name;
+		this.desc = builder.desc;
+		this.links = builder.links;
+		this.imgLink = builder.imgLink;
+		this.startingPos = builder.startingPos;
+		this.finalPos = builder.finalPos;
+		this.submitting = builder.submitting;
+		this.lvlOfCompetence = builder.lvlOfCompetence;
 	}
 
 	public int getId() {
@@ -122,6 +130,63 @@ public class Technique {
 
 	public void setSubmitting(Boolean submitting) {
 		this.submitting = submitting;
+	}
+	
+	public static class TechniqueBuilder {
+
+		
+		private String name;
+		private String desc;
+		private Set <Link> links; 
+		private String imgLink;
+		private String startingPos;
+		private String finalPos;
+		private Boolean submitting;
+		private int lvlOfCompetence;
+		
+		public TechniqueBuilder(String name) {
+			this.name = name;
+		}
+
+		public TechniqueBuilder desc(String desc) {
+			this.desc = desc;
+			return this;
+		}
+		
+		public TechniqueBuilder links(Set<Link> links) {
+			this.links = links;
+			return this;
+		}
+
+		public TechniqueBuilder imgLink(String imgLink) {
+			this.imgLink = imgLink;
+			return this;
+		}
+
+		public TechniqueBuilder startingPos(String startingPos) {
+			this.startingPos = startingPos;
+			return this;
+		}
+
+		public TechniqueBuilder finalPos(String finalPos) {
+			this.finalPos = finalPos;
+			return this;
+		}
+
+		public TechniqueBuilder submitting(Boolean submitting) {
+			this.submitting = submitting;
+			return this;
+		}
+
+		public TechniqueBuilder lvlOfCompetence(int lvlOfCompetence) {
+			this.lvlOfCompetence = lvlOfCompetence;
+			return this;
+		}
+		
+		public Technique build () {
+			return new Technique (this);
+		}
+
 	}
 	
 }
