@@ -19,7 +19,7 @@
 
         <property name="show_sql">true</property>
         
-	    <mapping resource="Hibernate/EmployeeXML.hbm.xml"/>
+	    <!-- <mapping resource="Hibernate/EmployeeXML.hbm.xml"/> -->
 
     </session-factory>
 </hibernate-configuration>

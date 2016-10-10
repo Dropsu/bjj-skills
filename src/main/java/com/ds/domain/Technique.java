@@ -11,17 +11,19 @@ import javax.persistence.*;
 public class Technique {
 
 	@Id @GeneratedValue
-	@Column(name= "technique_id")
+	@Column
 	private int id;
 	
-	@Column(name = "name")
+	@ManyToOne
+	private Account account;
+	
+	@Column
 	private String name;
 	
-	@Column(name = "description")
-	private String desc;
+	@Column
+	private String description;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name="TECHNIQUE_LINK", joinColumns = {@JoinColumn(name = "technique_id")}, inverseJoinColumns= {@JoinColumn(name="link_id")})
+	@OneToMany(mappedBy = "technique")
 	private Set <Link> links; 
 	
 	@Column(name = "img_link")
@@ -33,7 +35,7 @@ public class Technique {
 	@Column(name = "final_pos")
 	private String finalPos;
 	
-	@Column(name = "submitting")
+	@Column
 	private Boolean submitting;
 	
 	@Column(name = "lvl_of_competence")
@@ -47,7 +49,7 @@ public class Technique {
 	private Technique(TechniqueBuilder builder) {
 		super();
 		this.name = builder.name;
-		this.desc = builder.desc;
+		this.description = builder.desc;
 		this.links = builder.links;
 		this.imgLink = builder.imgLink;
 		this.startingPos = builder.startingPos;
@@ -73,11 +75,11 @@ public class Technique {
 	}
 
 	public String getDesc() {
-		return desc;
+		return description;
 	}
 
 	public void setDesc(String desc) {
-		this.desc = desc;
+		this.description = desc;
 	}
 
 	public Set<Link> getLinks() {

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -11,11 +12,14 @@ import javax.persistence.Table;
 public class Link {
 	
 	@Id@GeneratedValue
-	@Column(name="link_id")
+	@Column
 	private int id;
 	
-	@Column(name="link")
+	@Column
 	private String link;
+
+	@ManyToOne
+	private Technique technique;
 
 	
 	public Link() { }

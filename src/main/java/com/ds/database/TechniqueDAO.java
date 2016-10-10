@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import com.ds.domain.Account;
 import com.ds.domain.Employee;
 import com.ds.domain.EmployeeXML;
 import com.ds.domain.Link;
@@ -27,6 +28,7 @@ public class TechniqueDAO {
        		   addPackage("com.ds.domain").
                   addAnnotatedClass(Technique.class).
                   addAnnotatedClass(Link.class).
+                  addAnnotatedClass(Account.class).
                   configure().
                   setProperty("hibernate.connection.url", System.getenv("JDBC_DATABASE_URL"));
                   serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
