@@ -14,7 +14,7 @@ public class Technique {
 	@Column
 	private int id;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Account account;
 	
 	@Column
@@ -23,7 +23,7 @@ public class Technique {
 	@Column
 	private String description;
 	
-	@OneToMany(mappedBy = "technique")
+	@OneToMany(mappedBy = "technique", cascade = CascadeType.ALL)
 	private Set <Link> links; 
 	
 	@Column(name = "img_link")
@@ -48,6 +48,7 @@ public class Technique {
 
 	private Technique(TechniqueBuilder builder) {
 		super();
+		this.account = builder.account;
 		this.name = builder.name;
 		this.description = builder.desc;
 		this.links = builder.links;
@@ -64,6 +65,14 @@ public class Technique {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public String getName() {
@@ -145,6 +154,7 @@ public class Technique {
 		private String finalPos;
 		private Boolean submitting;
 		private int lvlOfCompetence;
+		private Account account;
 		
 		public TechniqueBuilder(String name) {
 			this.name = name;

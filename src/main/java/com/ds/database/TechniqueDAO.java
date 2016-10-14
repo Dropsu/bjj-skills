@@ -9,6 +9,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import com.ds.domain.Account;
@@ -16,27 +18,16 @@ import com.ds.domain.Link;
 import com.ds.domain.Technique;
 
 @Service
+@DependsOn("databaseConn")
 public class TechniqueDAO {
-	
+		
    private static SessionFactory factory; 
    private static ServiceRegistry serviceRegistry;
     
    public TechniqueDAO () {
-	   try{
-	    	  Configuration configuration = new Configuration().
-	       		   addPackage("com.ds.domain").
-	                  addAnnotatedClass(Technique.class).
-	                  addAnnotatedClass(Link.class).
-	                  addAnnotatedClass(Account.class).
-	                  configure().
-	                  setProperty("hibernate.connection.url", System.getenv("JDBC_DATABASE_URL"));
-	                  serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
-	                          configuration.getProperties()).build();
-	                  factory = configuration.buildSessionFactory(serviceRegistry);  
-	      }catch (Throwable ex) { 
-	         System.err.println("Failed to create sessionFactory object." + ex);
-	         throw new ExceptionInInitializerError(ex); 
-	      }
+	  System.out.println("technique DAO created!");
+	  this.factory = DatabaseConn.getFactory();
+	  this.serviceRegistry = DatabaseConn.getServiceRegistry();
    }
  
    public Integer addTechnique(Technique technique){

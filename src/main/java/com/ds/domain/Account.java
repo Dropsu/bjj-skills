@@ -16,10 +16,18 @@ public class Account {
 	@Column
 	private String password;
 	
-	@OneToMany(mappedBy="account")
+	@OneToMany(mappedBy="account", cascade = CascadeType.ALL)
 	private Set<Technique> techniques;
 
 	private Account() { }
+
+	private Account(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+	
+	
 	
 	
 }

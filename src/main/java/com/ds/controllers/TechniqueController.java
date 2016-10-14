@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ds.database.TechniqueDAO;
+import com.ds.domain.Account;
 import com.ds.domain.Technique;
 
 @RestController
