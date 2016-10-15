@@ -8,6 +8,7 @@ import javax.persistence.*;
 public class Account {
 
 	@Id @GeneratedValue
+	@Column
 	private long id;
 	
 	@Column
@@ -26,6 +27,31 @@ public class Account {
 		this.username = username;
 		this.password = password;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Set<Technique> getTechniques() {
+		return techniques;
+	}
+
+	public void setTechniques(Set<Technique> techniques) {
+		this.techniques = techniques;
+	}
+	
 	
 	
 	

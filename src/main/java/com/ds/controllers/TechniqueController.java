@@ -19,19 +19,8 @@ public class TechniqueController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	String add(@RequestBody Technique input) {
-		Technique technique = 
-				new Technique.TechniqueBuilder(
-						input.getName()).
-						desc(input.getDesc()).
-						links(input.getLinks()).
-						imgLink(input.getImgLink()).
-						startingPos(input.getStartingPos()).
-						finalPos(input.getFinalPos()).
-						submitting(input.getSubmitting()).
-						lvlOfCompetence(input.getLvlOfCompetence()).
-						build();
-		tDAO.addTechnique(technique);
-		return technique.getName()+" "+technique.getDesc()+" "+technique.getStartingPos();
+		tDAO.addTechnique(input);
+		return "ok";
 	}
 
 }
