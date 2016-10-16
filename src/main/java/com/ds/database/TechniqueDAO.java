@@ -30,12 +30,14 @@ public class TechniqueDAO {
 	  this.serviceRegistry = DatabaseConn.getServiceRegistry();
    }
  
-   public Integer addTechnique(Technique technique){
+   public Integer addTechnique(Technique technique, long accountId){
       Session session = factory.openSession();
       Transaction tx = null;
       Integer techniqueID = null;
       try{
          tx = session.beginTransaction();
+         Account account = (Account)session.get(Account.class, accountId);
+         technique.setAccount(account);
          techniqueID = (Integer) session.save(technique); 
          tx.commit();
       }catch (HibernateException e) {
@@ -68,15 +70,18 @@ public class TechniqueDAO {
       }
    }
    
-   public void updateTechnique(Integer TechniqueID, int lvlOfCompetence ){
+   
+   //TODO: Correct this
+   public void updateTechnique(Integer TechniqueID, Technique updatedTechnique){
       Session session = factory.openSession();
       Transaction tx = null;
       try{
          tx = session.beginTransaction();
          Technique technique = 
-                    (Technique)session.get(Technique.class, TechniqueID); 
-         technique.setLvlOfCompetence(lvlOfCompetence);
-		 session.update(technique); 
+                    (Technique)session.get(Technique.class, TechniqueID);
+         updatedTechnique.setAccount(technique.getAccount());
+         session.delete(technique);
+         session.save(updatedTechnique);
          tx.commit();
       }catch (HibernateException e) {
          if (tx!=null) tx.rollback();

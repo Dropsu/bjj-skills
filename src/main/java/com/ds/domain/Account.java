@@ -51,6 +51,15 @@ public class Account {
 	public void setTechniques(Set<Technique> techniques) {
 		this.techniques = techniques;
 	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	
 	
 	
