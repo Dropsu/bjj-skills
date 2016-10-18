@@ -15,13 +15,13 @@ import com.ds.domain.Technique;
 @DependsOn("databaseConn")
 public class AccountDAO {
 	
-	 private static SessionFactory factory; 
-	 private static ServiceRegistry serviceRegistry;
+	private static SessionFactory factory; 
+	private static ServiceRegistry serviceRegistry;
 
 	public AccountDAO () {
 		System.out.println("acc DAO created");
-		 this.factory = DatabaseConn.getFactory();
-		 this.serviceRegistry = DatabaseConn.getServiceRegistry();
+		 AccountDAO.factory = DatabaseConn.getFactory();
+		 AccountDAO.serviceRegistry = DatabaseConn.getServiceRegistry();
 	}
 	
 	public Long addAccount(Account account){

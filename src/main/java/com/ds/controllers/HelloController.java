@@ -10,7 +10,7 @@ public class HelloController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String sayHello() {
-		return "Czesc DamiX";
+		return "<h1>Welcome to bjj-skills</h1>";
 	}
 
 }

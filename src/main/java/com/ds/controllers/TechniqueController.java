@@ -24,18 +24,25 @@ public class TechniqueController {
 		return tDAO.addTechnique(input,accountId);
 	}
 	
-	//TODO: Updating techniques
+	@RequestMapping(value="/{techniqueId}", method = RequestMethod.GET)
+	Technique get(@PathVariable Integer techniqueId) {
+		Technique technique = tDAO.getTechnique(techniqueId);
+		return technique;
+	}
 	
-	/*@RequestMapping(value="/update/{techniqueId}", method = RequestMethod.POST)
+
+	
+	@RequestMapping(value="/update/{techniqueId}", method = RequestMethod.POST)
 	String update(@PathVariable Integer techniqueId, @RequestBody Technique input) {
-		tDAO.updateTechnique(techniqueId, input);
+		//TODO: Check how to retreive data (getSingleResult maybe), actual method crushes app
+		/*tDAO.updateTechnique(techniqueId, input);*/
 		return "ok";
-	}*/
+	}
 	
 	@RequestMapping(value="/delete/{techniqueId}", method = RequestMethod.DELETE)
 	String delete(@PathVariable Integer techniqueId) {
 		tDAO.deleteTechnique(techniqueId);
 		return "ok";
-	}
+	} 
 
 }

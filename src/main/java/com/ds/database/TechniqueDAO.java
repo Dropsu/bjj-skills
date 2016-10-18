@@ -26,8 +26,8 @@ public class TechniqueDAO {
     
    public TechniqueDAO () {
 	  System.out.println("technique DAO created!");
-	  this.factory = DatabaseConn.getFactory();
-	  this.serviceRegistry = DatabaseConn.getServiceRegistry();
+	  TechniqueDAO.factory = DatabaseConn.getFactory();
+	  TechniqueDAO.serviceRegistry = DatabaseConn.getServiceRegistry();
    }
  
    public Integer addTechnique(Technique technique, long accountId){
@@ -71,18 +71,21 @@ public class TechniqueDAO {
    }
    
    
-   //TODO: Correct this
+// TODO: Check why the account field doesn't update properly
    public void updateTechnique(Integer TechniqueID, Technique updatedTechnique){
       Session session = factory.openSession();
       Transaction tx = null;
+      Transaction tx2 = null;
       try{
          tx = session.beginTransaction();
          Technique technique = 
                     (Technique)session.get(Technique.class, TechniqueID);
-         updatedTechnique.setAccount(technique.getAccount());
-         session.delete(technique);
-         session.save(updatedTechnique);
          tx.commit();
+         updatedTechnique.setAccount(technique.getAccount());
+         technique.update(updatedTechnique);
+         tx2 = session.beginTransaction();
+         session.update(technique);
+         tx2.commit();
       }catch (HibernateException e) {
          if (tx!=null) tx.rollback();
          e.printStackTrace(); 
@@ -90,6 +93,24 @@ public class TechniqueDAO {
          session.close(); 
       }
    }
+   
+   public Technique getTechnique(Integer TechniqueID){
+	      Session session = factory.openSession();
+	      Transaction tx = null;
+	      Technique technique = null;
+	      try{
+	         tx = session.beginTransaction();
+	          technique = 
+	                    (Technique)session.get(Technique.class, TechniqueID);
+	         tx.commit();
+	      }catch (HibernateException e) {
+	         if (tx!=null) tx.rollback();
+	         e.printStackTrace(); 
+	      }finally {
+	         session.close(); 
+	      }
+	      return technique;
+	   }
 
    public void deleteTechnique(Integer TechniqueID){
       Session session = factory.openSession();

@@ -17,7 +17,7 @@ public class Account {
 	@Column
 	private String password;
 	
-	@OneToMany(mappedBy="account", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="account", cascade = CascadeType.ALL)
 	private Set<Technique> techniques;
 
 	private Account() { }

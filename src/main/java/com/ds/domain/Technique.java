@@ -14,7 +14,7 @@ public class Technique {
 	@Column
 	private int id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Account account;
 	
 	@Column
@@ -23,7 +23,7 @@ public class Technique {
 	@Column
 	private String description;
 	
-	@OneToMany(mappedBy = "technique", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER,mappedBy = "technique", cascade = CascadeType.ALL)
 	private Set <Link> links; 
 	
 	@Column(name = "img_link")
@@ -57,6 +57,18 @@ public class Technique {
 		this.finalPos = builder.finalPos;
 		this.submitting = builder.submitting;
 		this.lvlOfCompetence = builder.lvlOfCompetence;
+	}
+	
+	public void update (Technique t2) { //TODO: Read more on cloning etc.
+		this.account = t2.getAccount();
+		this.name = t2.getName();
+		this.description = t2.getDesc();
+		this.links = t2.getLinks();
+		this.imgLink = t2.getImgLink();
+		this.startingPos = t2.getStartingPos();
+		this.finalPos = t2.getFinalPos();
+		this.submitting = t2.getSubmitting();
+		this.lvlOfCompetence = t2.getLvlOfCompetence();
 	}
 
 	public int getId() {
