@@ -19,7 +19,7 @@ public class Link {
 	@Column
 	private String link;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	private Technique technique;
 
 	

@@ -1,7 +1,11 @@
 package com.ds.database;
-import java.util.List; 
-import java.util.Iterator; 
- 
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import java.util.Iterator;
+
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException; 
 import org.hibernate.Session; 
 import org.hibernate.Transaction;
@@ -19,6 +23,7 @@ import com.ds.domain.Technique;
 
 @Service
 @DependsOn("databaseConn")
+@Transactional
 public class TechniqueDAO {
 		
    private static SessionFactory factory; 
@@ -50,12 +55,13 @@ public class TechniqueDAO {
    }
 
    
-   public void listTechniques( ){
+   public List<Technique> listTechniques( ){
       Session session = factory.openSession();
       Transaction tx = null;
+      List techniques = null;
       try{
          tx = session.beginTransaction();
-         List techniques = session.createQuery("FROM Technique").list(); 
+         techniques = session.createQuery("FROM Technique").list(); 
          for (Iterator iterator = 
                            techniques.iterator(); iterator.hasNext();){
             Technique technique = (Technique) iterator.next(); 
@@ -68,10 +74,10 @@ public class TechniqueDAO {
       }finally {
          session.close(); 
       }
+	return techniques;
    }
    
    
-// TODO: Check why the account field doesn't update properly
    public void updateTechnique(Integer TechniqueID, Technique updatedTechnique){
       Session session = factory.openSession();
       Transaction tx = null;
@@ -109,6 +115,7 @@ public class TechniqueDAO {
 	      }finally {
 	         session.close(); 
 	      }
+	     
 	      return technique;
 	   }
 

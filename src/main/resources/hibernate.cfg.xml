@@ -9,7 +9,6 @@
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">damiuq55</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:0/TO_BE_REPLACED_BY_SYSTEM_ENV</property>
-        
         <!-- LOCAL: jdbc:postgresql://localhost:5432/postgres -->
 	
 

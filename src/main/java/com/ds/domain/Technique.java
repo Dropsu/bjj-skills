@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(name="Technique")
@@ -14,7 +16,8 @@ public class Technique {
 	@Column
 	private int id;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonBackReference
 	private Account account;
 	
 	@Column
@@ -23,7 +26,7 @@ public class Technique {
 	@Column
 	private String description;
 	
-	@OneToMany(fetch = FetchType.EAGER,mappedBy = "technique", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "technique", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set <Link> links; 
 	
 	@Column(name = "img_link")

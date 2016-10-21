@@ -1,5 +1,7 @@
 package com.ds.controllers;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +13,7 @@ import com.ds.database.TechniqueDAO;
 import com.ds.domain.Account;
 import com.ds.domain.Technique;
 
+@Transactional
 @RestController
 @RequestMapping("/techniques")
 public class TechniqueController {
@@ -34,8 +37,7 @@ public class TechniqueController {
 	
 	@RequestMapping(value="/update/{techniqueId}", method = RequestMethod.POST)
 	String update(@PathVariable Integer techniqueId, @RequestBody Technique input) {
-		//TODO: Check how to retreive data (getSingleResult maybe), actual method crushes app
-		/*tDAO.updateTechnique(techniqueId, input);*/
+		tDAO.updateTechnique(techniqueId, input);
 		return "ok";
 	}
 	

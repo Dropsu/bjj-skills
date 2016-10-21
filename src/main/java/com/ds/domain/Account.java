@@ -4,6 +4,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Account {
 
@@ -17,7 +19,8 @@ public class Account {
 	@Column
 	private String password;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy="account", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference
 	private Set<Technique> techniques;
 
 	private Account() { }
