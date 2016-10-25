@@ -23,7 +23,7 @@ public class Account {
 	@JsonManagedReference
 	private Set<Technique> techniques;
 
-	private Account() { }
+	public Account() { }
 
 	private Account(String username, String password) {
 		super();
