@@ -13,10 +13,11 @@ public class AccountLinkWrapper extends ResourceSupport {
 
 	private final Account account;
 
-	public AccountLinkWrapper(Account account) { //TODO: Add link to its techniques
+	public AccountLinkWrapper(Account account) { 
 		super();
 		this.account = account;
-		this.add(linkTo(methodOn(AccountController.class).get(account.getId())).withSelfRel());		
+		this.add(linkTo(methodOn(AccountController.class).get(account.getId())).withSelfRel());	
+		this.add(linkTo(TechniqueController.class).slash("id").withRel("To technique with <id>"));//TODO: Add link to its techniques	
 	}
 
 	public Account getAccount() {
