@@ -1,6 +1,12 @@
 package com.ds.controllers;
 
-import javax.transaction.Transactional;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,33 +22,43 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.ds.database.TechniqueDAO;
 import com.ds.domain.Account;
 import com.ds.domain.Technique;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+
 
 import linkwrappers.TechniqueLinkWrapper;
 
-@Transactional
 @RestController
-@RequestMapping("/techniques")
+@RequestMapping("/accounts/{accountId}/techniques")
 public class TechniqueController {
 	
 	@Autowired
 	TechniqueDAO tDAO;
 	
-	@RequestMapping(value="/{accountId}", method = RequestMethod.POST)
-	ResponseEntity<?> Integer (@PathVariable long accountId, @RequestBody Technique input) {
-		System.out.println(accountId);
-		long id = tDAO.addTechnique(input,accountId);
+	@RequestMapping(method = RequestMethod.POST)
+	ResponseEntity<?> add (@PathVariable long accountId, @RequestBody Technique input) {
+		Integer id = tDAO.addTechnique(input,accountId);
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setLocation(ServletUriComponentsBuilder
-				.fromCurrentContextPath().path("/techniques/"+id)
-				.buildAndExpand(id).toUri());
+		httpHeaders.setLocation(linkTo(methodOn(TechniqueController.class).get(accountId,id)).toUri());		
 		return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/{techniqueId}", method = RequestMethod.GET)
 	public
-	TechniqueLinkWrapper get(@PathVariable Integer techniqueId) {
+	TechniqueLinkWrapper get(@PathVariable long accountId, @PathVariable Integer techniqueId) {
 		Technique technique = tDAO.getTechnique(techniqueId);
 		return new TechniqueLinkWrapper(technique);				
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public
+	Set<TechniqueLinkWrapper> getTechniquesList(@PathVariable Long accountId) {
+		Set <Technique> techniques = tDAO.getTechniques(accountId);
+		Set<TechniqueLinkWrapper> techniquesWithLinks = new HashSet<TechniqueLinkWrapper>();
+		techniques.forEach(t ->{
+			techniquesWithLinks.add(new TechniqueLinkWrapper(t));
+		});
+		return techniquesWithLinks;
+				
 	}
 	
 
@@ -53,7 +69,7 @@ public class TechniqueController {
 		return "ok";
 	}
 	
-	@RequestMapping(value="/delete/{techniqueId}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/{techniqueId}", method = RequestMethod.DELETE)
 	String delete(@PathVariable Integer techniqueId) {
 		tDAO.deleteTechnique(techniqueId);
 		return "ok";

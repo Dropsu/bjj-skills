@@ -1,5 +1,7 @@
 package com.ds.database;
 
+import java.util.Set;
+
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -42,24 +44,6 @@ public class AccountDAO {
 	      return accID;
 	   }
 	
-	  public Account getAccount(Long AccountId){
-	      Session session = factory.openSession();
-	      Transaction tx = null;
-	      Account account = null;
-	      try{
-	         tx = session.beginTransaction();
-	          account = 
-	                    (Account)session.get(Account.class, AccountId);
-	          Hibernate.initialize(account.getTechniques());
-	         tx.commit();
-	      }catch (HibernateException e) {
-	         if (tx!=null) tx.rollback();
-	         e.printStackTrace(); 
-	      }finally {
-	         session.close(); 
-	      }
-	     
-	      return account;
-	   }
+	
 	
 }

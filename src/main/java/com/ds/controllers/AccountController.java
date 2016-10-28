@@ -1,11 +1,21 @@
 package com.ds.controllers;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ds.database.AccountDAO;
 import com.ds.domain.Account;
@@ -22,16 +32,11 @@ public class AccountController {
 	AccountDAO accDAO;
 	
 	@RequestMapping(method = RequestMethod.POST)
-	Long add (@RequestBody Account input) {
-		return accDAO.addAccount(input);
-	}
-	
-	@RequestMapping(value="/{accountId}", method = RequestMethod.GET)
-	public
-	AccountLinkWrapper get(@PathVariable Long accountId) {
-		Account account = accDAO.getAccount(accountId);
-		return new AccountLinkWrapper(account);
-				
+	ResponseEntity<?> add (@RequestBody Account input) {
+		long id = accDAO.addAccount(input);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setLocation(linkTo(AccountController.class).slash(id).toUri());//TODO: replace slash with pointer to some method on account
+		return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
 	}
 
 }
