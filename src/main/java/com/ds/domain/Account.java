@@ -25,6 +25,17 @@ public class Account {
 
 	public Account() { }
 
+	
+	
+	public Account(Account acc) {
+		this.id = acc.getId();
+		this.username = acc.getUsername();
+		this.password = acc.getPassword();
+		this.techniques = acc.getTechniques();
+	}
+
+
+
 	private Account(String username, String password) {
 		super();
 		this.username = username;

@@ -1,4 +1,4 @@
-package com.ds.controllers;
+package com.ds.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

@@ -1,10 +1,10 @@
-package linkwrappers;
+package hateoas;
 
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
 
-import com.ds.controllers.AccountController;
-import com.ds.controllers.TechniqueController;
+import com.ds.controller.AccountController;
+import com.ds.controller.TechniqueController;
 import com.ds.domain.Technique;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 

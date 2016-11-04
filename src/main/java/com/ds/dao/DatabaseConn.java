@@ -1,4 +1,4 @@
-package com.ds.database;
+package com.ds.dao;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

@@ -1,4 +1,4 @@
-package com.ds.controllers;
+package com.ds.controller;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -17,26 +17,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.ds.database.AccountDAO;
+import com.ds.dao.AccountDAO;
 import com.ds.domain.Account;
 import com.ds.domain.Technique;
+import com.ds.service.AccountService;
 
-import linkwrappers.AccountLinkWrapper;
-import linkwrappers.TechniqueLinkWrapper;
+import hateoas.AccountLinkWrapper;
+import hateoas.TechniqueLinkWrapper;
 
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
 	
 	@Autowired
-	AccountDAO accDAO;
+	AccountService accService;
 	
 	@RequestMapping(method = RequestMethod.POST)
 	ResponseEntity<?> add (@RequestBody Account input) {
-		long id = accDAO.addAccount(input);
+		long id = accService.addAccount(input);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setLocation(linkTo(AccountController.class).slash(id).toUri());//TODO: replace slash with pointer to some method on account
 		return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	void getAccTest () {
+		accService.getAccountByUsername("Damix");
 	}
 
 }

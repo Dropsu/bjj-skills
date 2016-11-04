@@ -1,4 +1,4 @@
-package com.ds.database;
+package com.ds.dao;
 import java.util.List;
 import java.util.Set;
 
@@ -16,15 +16,15 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.ds.domain.Account;
 import com.ds.domain.Link;
 import com.ds.domain.Technique;
 
-@Service
+@Repository
 @DependsOn("databaseConn")
-@Transactional
 public class TechniqueDAO {
 		
    private static SessionFactory factory; 
@@ -56,7 +56,7 @@ public class TechniqueDAO {
    }
 
    
-   public List<Technique> listTechniques( ){
+/*   public List<Technique> listTechniques( ){
       Session session = factory.openSession();
       Transaction tx = null;
       List techniques = null;
@@ -76,7 +76,7 @@ public class TechniqueDAO {
          session.close(); 
       }
 	return techniques;
-   }
+   }*/
    
    
    public void updateTechnique(Integer TechniqueID, Technique updatedTechnique){
