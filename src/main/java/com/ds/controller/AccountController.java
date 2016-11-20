@@ -39,10 +39,12 @@ public class AccountController {
 		httpHeaders.setLocation(linkTo(AccountController.class).slash(id).toUri());//TODO: replace slash with pointer to some method on account
 		return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
 	}
-	
-	@RequestMapping(method = RequestMethod.GET)
-	void getAccTest () {
-		accService.getAccountByUsername("Damix");
+
+
+	@RequestMapping(value= "/{accountUsername}", method = RequestMethod.GET)
+	Account getAcc (@PathVariable String accountUsername) {
+
+        return accService.getAccountByUsername(accountUsername);
 	}
 
 }
