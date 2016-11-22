@@ -4,13 +4,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 
 @RestController
 public class HelloController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String sayHello() {
-		return "<h1>Welcome to bjj-skills</h1>";
+	public String sayHello(Principal principal) {
+		return "<h1>Welcome to bjj-skills "+principal.getName()+"</h1>";
 	}
 
 }

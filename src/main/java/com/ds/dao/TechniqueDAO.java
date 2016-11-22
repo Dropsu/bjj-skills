@@ -140,7 +140,7 @@ public class TechniqueDAO {
 	      return account.getTechniques();
 	   }
 
-   public void deleteTechnique(Integer TechniqueID){
+   public void deleteTechnique(Integer TechniqueID){ // TODO: Now it delates technique with associated account (and it's techniques), (coz of casdade?)
       Session session = factory.openSession();
       Transaction tx = null;
       try{
