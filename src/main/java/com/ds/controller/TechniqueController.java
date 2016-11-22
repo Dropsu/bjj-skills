@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.ds.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,30 +30,35 @@ import hateoas.TechniqueLinkWrapper;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 @RestController
-@RequestMapping("/accounts/{accountId}/techniques")
+@RequestMapping("/accounts/{accountUsername}/techniques")
 public class TechniqueController {
 		
 	@Autowired
 	TechniqueService techService;
+
+	@Autowired
+	AccountService accService;
 	
 	@RequestMapping(method = RequestMethod.POST)
-	ResponseEntity<?> add (@PathVariable long accountId, @RequestBody Technique input) {
+	ResponseEntity<?> add (@PathVariable String accountUsername, @RequestBody Technique input) {
+		long accountId = accService.getAccountByUsername(accountUsername).getId();
 		Integer id = techService.addTechnique(input,accountId);
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setLocation(linkTo(methodOn(TechniqueController.class).get(accountId,id)).toUri());		
+		httpHeaders.setLocation(linkTo(methodOn(TechniqueController.class).get(accountUsername,id)).toUri());
 		return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/{techniqueId}", method = RequestMethod.GET)
 	public
-	TechniqueLinkWrapper get(@PathVariable long accountId, @PathVariable Integer techniqueId) {
+	TechniqueLinkWrapper get(@PathVariable String accountUsername, @PathVariable Integer techniqueId) {
 		Technique technique = techService.getTechnique(techniqueId);
 		return new TechniqueLinkWrapper(technique);				
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public
-	Set<TechniqueLinkWrapper> getTechniquesList(@PathVariable Long accountId) {
+	Set<TechniqueLinkWrapper> getTechniquesList(@PathVariable String accountUsername) {
+		long accountId = accService.getAccountByUsername(accountUsername).getId();
 		Set <Technique> techniques = techService.getTechniques(accountId);
 		Set<TechniqueLinkWrapper> techniquesWithLinks = new HashSet<TechniqueLinkWrapper>();
 		techniques.forEach(t ->{

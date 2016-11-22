@@ -15,8 +15,8 @@ public class TechniqueLinkWrapper extends ResourceSupport {
 	public TechniqueLinkWrapper(Technique technique) {
 		super();
 		this.technique = technique;
-		this.add(linkTo(methodOn(TechniqueController.class).get(technique.getAccount().getId(),technique.getId())).withSelfRel());
-		this.add(linkTo(AccountController.class).slash(technique.getAccount().getId()).withRel("Account"));		
+		this.add(linkTo(methodOn(TechniqueController.class).get(technique.getAccount().getUsername(),technique.getId())).withSelfRel());
+		this.add(linkTo(AccountController.class).slash(technique.getAccount().getUsername()).withRel("Account"));
 	}
 
 	public Technique getTechnique() {
