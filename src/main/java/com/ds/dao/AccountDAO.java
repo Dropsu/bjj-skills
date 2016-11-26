@@ -29,13 +29,13 @@ public class AccountDAO {
 		 AccountDAO.serviceRegistry = DatabaseConn.getServiceRegistry();
 	}
 	
-	public Long addAccount(Account account){
+	public Integer addAccount(Account account){
 	      Session session = factory.openSession();
 	      Transaction tx = null;
-	      Long accID = null;
+	      Integer accID = null;
 	      try{
 	         tx = session.beginTransaction();
-	         accID = (Long) session.save(account); 
+	         accID = (int) session.save(account);
 	         tx.commit();
 	      }catch (HibernateException e) {
 	         if (tx!=null) tx.rollback();
@@ -46,24 +46,39 @@ public class AccountDAO {
 	      return accID;
 	   }
 	
-	 public Account getAccountByUsername(String username){
-	      Session session = factory.openSession();
-	      Transaction tx = null;
-	      List<Account> accounts = null;
-	      try{
-	         tx = session.beginTransaction();
-	          accounts = session.createQuery("FROM Account WHERE Username='"+username+"'").list();
-	         tx.commit();
-	      }catch (HibernateException e) {
-	         if (tx!=null) tx.rollback();
-	         e.printStackTrace(); 
-	      }finally {
-	         session.close(); 
-	      }
-	     
-	      return accounts.get(0);
-	   }
-	
-	
+     public Account getAccountByUsername(String username){
+          Session session = factory.openSession();
+          Transaction tx = null;
+          List<Account> accounts = null;
+          try{
+             tx = session.beginTransaction();
+              accounts = session.createQuery("FROM Account WHERE Username='"+username+"'").list();
+             tx.commit();
+          }catch (HibernateException e) {
+             if (tx!=null) tx.rollback();
+             e.printStackTrace();
+          }finally {
+             session.close();
+          }
+
+          return accounts.get(0);
+       }
+
+    public void deleteAccount(Integer AccountID){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            Account account =
+                    (Account) session.get(Account.class, AccountID);
+            session.delete(account);
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+    }
 	
 }

@@ -1,5 +1,6 @@
 package com.ds.security;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -7,8 +8,8 @@ import java.util.List;
 import com.ds.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,14 +39,20 @@ public class CustomUserDetailsService extends Account implements UserDetailsServ
 
         /*for(UserProfile userProfile : account.getUserProfiles()){
             System.out.println("UserProfile : "+userProfile); TODO: add possibility of multiple roles */
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
             
-        System.out.print("authorities :"+authorities);
         return authorities;
     }
 
-    public static boolean checkAuthorization (String usernameToVerify, String validUsername) {
-        if (usernameToVerify.equals(validUsername)||usernameToVerify.equals("admin")) {
+    public static boolean checkAuthorization (Principal principal, String validUsername) {
+        Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        for (GrantedAuthority sga: authorities
+             ) {
+            if(sga.getAuthority().equals("ROLE_ADMIN")){
+                return true;
+            }
+        }
+        if (principal.getName().equals(validUsername)) {
             return true;
         }
         return false;

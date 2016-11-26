@@ -36,7 +36,7 @@ public class TechniqueDAO {
 	  TechniqueDAO.serviceRegistry = DatabaseConn.getServiceRegistry();
    }
  
-   public Integer addTechnique(Technique technique, long accountId){
+   public Integer addTechnique(Technique technique, Integer accountId){
       Session session = factory.openSession();
       Transaction tx = null;
       Integer techniqueID = null;
@@ -120,7 +120,7 @@ public class TechniqueDAO {
 	      return technique;
 	   }
    
-   public Set<Technique> getTechniques(Long AccountId){
+   public Set<Technique> getTechniques(Integer AccountId){
 	      Session session = factory.openSession();
 	      Transaction tx = null;
 	      Account account = null;
@@ -140,7 +140,7 @@ public class TechniqueDAO {
 	      return account.getTechniques();
 	   }
 
-   public void deleteTechnique(Integer TechniqueID){ // TODO: Now it delates technique with associated account (and it's techniques), (coz of casdade?)
+   public void deleteTechnique(Integer TechniqueID){
       Session session = factory.openSession();
       Transaction tx = null;
       try{

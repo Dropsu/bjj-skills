@@ -22,7 +22,7 @@ public class TechniqueService {
 	TechniqueDAO techDAO;
 	
 	 public Integer addTechnique(Technique technique, long accountId){
-	   return techDAO.addTechnique(technique, accountId);
+	   return techDAO.addTechnique(technique, (int) accountId);
 	   }
 	 
 	 public void updateTechnique(Integer TechniqueID, Technique updatedTechnique){
@@ -33,7 +33,7 @@ public class TechniqueService {
 	      return techDAO.getTechnique(TechniqueID);
 	   }
 	 
-	 public Set<Technique> getTechniques(Long AccountId){
+	 public Set<Technique> getTechniques(Integer AccountId){
 	     return techDAO.getTechniques(AccountId);
 	   }
 	 

@@ -16,7 +16,7 @@ public class Technique {
 	@Column
 	private int id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JsonBackReference
 	private Account account;
 	

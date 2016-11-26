@@ -37,7 +37,7 @@ public class TechniqueController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	ResponseEntity<?> add (@PathVariable String accountUsername, @RequestBody Technique input, Principal principal) throws Exception {
-        if(!CustomUserDetailsService.checkAuthorization(principal.getName(),accountUsername)) {
+        if(!CustomUserDetailsService.checkAuthorization(principal,accountUsername)) {
             throw new Exception("Access denied");//TODO: Nicer exception handling, error page
         }
         long accountId = accService.getAccountByUsername(accountUsername).getId();
@@ -49,11 +49,11 @@ public class TechniqueController {
 	
 	@RequestMapping(value="/{techniqueId}", method = RequestMethod.GET)
 	public LinkWrapper get(@PathVariable String accountUsername, @PathVariable Integer techniqueId, Principal principal) throws Exception {
-        if(!CustomUserDetailsService.checkAuthorization(principal.getName(),accountUsername)) {
+        if(!CustomUserDetailsService.checkAuthorization(principal,accountUsername)) {
             throw new Exception("Access denied");//TODO: Nicer exception handling, error page
         }
 		Technique technique = techService.getTechnique(techniqueId);
-        if(!CustomUserDetailsService.checkAuthorization(principal.getName(),technique.getAccount().getUsername())) {
+        if(!CustomUserDetailsService.checkAuthorization(principal,technique.getAccount().getUsername())) {
             throw new Exception("Access denied");//TODO: Nicer exception handling, error page
         }
 		return new LinkWrapper(technique);
@@ -62,10 +62,10 @@ public class TechniqueController {
 	@RequestMapping(method = RequestMethod.GET)
 	public
 	Set<LinkWrapper> getTechniquesList(@PathVariable String accountUsername, Principal principal) throws Exception {
-        if(!CustomUserDetailsService.checkAuthorization(principal.getName(),accountUsername)) {
+        if(!CustomUserDetailsService.checkAuthorization(principal,accountUsername)) {
             throw new Exception("Access denied");//TODO: Nicer exception handling, error page
         }
-		long accountId = accService.getAccountByUsername(accountUsername).getId();
+		Integer accountId = accService.getAccountByUsername(accountUsername).getId();
 		Set <Technique> techniques = techService.getTechniques(accountId);
 		Set<LinkWrapper> techniquesWithLinks = new HashSet<LinkWrapper>();
 		techniques.forEach(t ->{
@@ -83,7 +83,7 @@ public class TechniqueController {
 	
 	@RequestMapping(value="/{techniqueId}", method = RequestMethod.PUT)
 	String update(@PathVariable Integer techniqueId, @RequestBody Technique input, Principal principal) throws Exception {
-        if(!CustomUserDetailsService.checkAuthorization(principal.getName(),techService.getTechnique(techniqueId).getAccount().getUsername())) {
+        if(!CustomUserDetailsService.checkAuthorization(principal,techService.getTechnique(techniqueId).getAccount().getUsername())) {
             throw new Exception("Access denied");//TODO: Nicer exception handling, error page
         }
 		techService.updateTechnique(techniqueId, input);
@@ -92,9 +92,9 @@ public class TechniqueController {
 	
 	@RequestMapping(value="/{techniqueId}", method = RequestMethod.DELETE)
 	String delete(@PathVariable Integer techniqueId, Principal principal) throws Exception {
-       /* if(!CustomUserDetailsService.checkAuthorization(principal.getName(),techService.getTechnique(techniqueId).getAccount().getUsername())) {
-            throw new Exception("Access denied");//TODO: Nicer exception handling, error page
-        }*/
+        if(!CustomUserDetailsService.checkAuthorization(principal,techService.getTechnique(techniqueId).getAccount().getUsername())) {
+            throw new Exception("Access denied");
+        }
 		techService.deleteTechnique(techniqueId);
 		return "ok";
 	} 
